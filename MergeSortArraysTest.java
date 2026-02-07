@@ -1,59 +1,74 @@
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import org.junit.jupiter.api.Test;
+
 /*
- This program merges two sorted arrays into one sorted array.
- We compare numbers from both arrays one by one and put the smaller one into a new array.
+ This class tests the merge method in MergeSortedArrays.
+ Each test checks if the result is correct for different cases.
 */
-public class MergeSortedArrays {
+public class MergeSortedArraysTest {
 
-    /*
-     This method takes two sorted arrays and then it returns one merged sorted array.
-     arr1 = first array
-     arr2 = second array
-     */
-    public static int[] merge(int[] arr1, int[] arr2) {
+    // Test merging two normal sorted arrays
+    @Test
+    public void testMergeNormalArrays() {
+        int[] arr1 = {1, 3, 5};
+        int[] arr2 = {2, 4, 6};
 
-        // Create a new array to store the final merged result
-        int[] mergedArray = new int[arr1.length + arr2.length];
+        int[] expected = {1, 2, 3, 4, 5, 6};
 
-        // i is used to move through arr1
-        // j is used to move through arr2
-        // k is used to move through mergedArray
-        int i = 0;
-        int j = 0;
-        int k = 0;
+        int[] result = MergeSortedArrays.merge(arr1, arr2);
 
-        // This loop runs while both arrays still have numbers left to compare
-        while (i < arr1.length && j < arr2.length) {
+        assertArrayEquals(expected, result);
+    }
 
-            // Compare the current numbers from both of the arrays
-            if (arr1[i] <= arr2[j]) {
-                // Put the smaller number from arr1 into mergedArray
-                mergedArray[k] = arr1[i];
-                i++; // move to the next number in arr1
-            } else {
-                // Put the smaller number from arr2 into mergedArray
-                mergedArray[k] = arr2[j];
-                j++; // move to the next number in arr2
-            }
+    // Test it when the first array is empty
+    @Test
+    public void testMergeWithFirstArrayEmpty() {
+        int[] arr1 = {};
+        int[] arr2 = {1, 2, 3};
 
-            // Move to the next position in mergedArray
-            k++;
-        }
+        int[] expected = {1, 2, 3};
 
-        // If arr1 still has leftover numbers, copy them into mergedArray
-        while (i < arr1.length) {
-            mergedArray[k] = arr1[i];
-            i++;
-            k++;
-        }
+        int[] result = MergeSortedArrays.merge(arr1, arr2);
 
-        // If arr2 still has leftover numbers, copy them into mergedArray
-        while (j < arr2.length) {
-            mergedArray[k] = arr2[j];
-            j++;
-            k++;
-        }
+        assertArrayEquals(expected, result);
+    }
 
-        // Return the merged sorted array
-        return mergedArray;
+    // Test arrays with different lengths
+    @Test
+    public void testMergeDifferentSizes() {
+        int[] arr1 = {1, 2};
+        int[] arr2 = {3, 4, 5, 6};
+
+        int[] expected = {1, 2, 3, 4, 5, 6};
+
+        int[] result = MergeSortedArrays.merge(arr1, arr2);
+
+        assertArrayEquals(expected, result);
+    }
+
+    // Test when the arrays are already in order
+    @Test
+    public void testMergeAlreadySorted() {
+        int[] arr1 = {1, 2, 3};
+        int[] arr2 = {4, 5, 6};
+
+        int[] expected = {1, 2, 3, 4, 5, 6};
+
+        int[] result = MergeSortedArrays.merge(arr1, arr2);
+
+        assertArrayEquals(expected, result);
+    }
+
+    // Test arrays that contain duplicate numbers
+    @Test
+    public void testMergeWithDuplicates() {
+        int[] arr1 = {1, 2, 2};
+        int[] arr2 = {2, 3, 4};
+
+        int[] expected = {1, 2, 2, 2, 3, 4};
+
+        int[] result = MergeSortedArrays.merge(arr1, arr2);
+
+        assertArrayEquals(expected, result);
     }
 }
